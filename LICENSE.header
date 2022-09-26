@@ -1,0 +1,23 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}  ${project.name} - ${nameAndExt}
+${licensePrefix?replace(" +$", "", "r")}
+${licensePrefix}  Copyright (c) 2022-${date?date?string("yyyy")}, Slinky Software
+${licensePrefix?replace(" +$", "", "r")}
+${licensePrefix}  This program is free software: you can redistribute it and/or modify
+${licensePrefix}  it under the terms of the GNU Affero General Public License as
+${licensePrefix}  published by the Free Software Foundation, either version 3 of the
+${licensePrefix}  License, or (at your option) any later version.
+${licensePrefix?replace(" +$", "", "r")}
+${licensePrefix}  This program is distributed in the hope that it will be useful,
+${licensePrefix}  but WITHOUT ANY WARRANTY; without even the implied warranty of
+${licensePrefix}  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+${licensePrefix}  GNU Affero General Public License for more details.
+${licensePrefix?replace(" +$", "", "r")}
+${licensePrefix}  A copy of the GNU Affero General Public License is located in the 
+${licensePrefix}  AGPL-3.0.md supplied with the source code.
+${licensePrefix?replace(" +$", "", "r")}
+<#if licenseLast??>
+${licenseLast}
+</#if>

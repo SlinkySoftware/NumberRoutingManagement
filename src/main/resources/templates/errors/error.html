@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  NumberRoutingManagement - error.html
+  Copyright (c) 2022-2022, Slinky Software
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  A copy of the GNU Affero General Public License is located in the 
+  AGPL-3.0.md supplied with the source code.
+
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <div th:replace="fragments/scripts :: header" th:remove="tag"></div>
+        <title th:text="${pagetitle}">Company - Index</title>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/master :: header" >Header</div>
+
+            <div class="alert alert-danger mx-3" role="alert" onclick="$('.table').toggle();">
+                A critical error has occurred in the application.
+            </div>
+            <div class="row px-5">
+                <table class="table table-sm table-bordered" style="display: none;">
+                    <tr>
+                        <th scope="row">Date</th>
+                        <td th:text="${timestamp}"/>
+                    </tr>
+                    <tr>
+                        <th scope="row">Path</th>
+                        <td th:text="${path}"/>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td><pre th:text="${status + ' (' + error + ')'}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Message</th>
+                        <td><pre th:text="${message}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Exception</th>
+                        <td><pre th:text="${exception}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Trace</th>
+                        <td><pre th:text="${trace}"/></td>
+                    </tr>
+                </table>
+                &nbsp;
+            </div>
+            <div th:replace="fragments/master :: footer">Footer</div>
+        </div>
+    </body>
+</html>

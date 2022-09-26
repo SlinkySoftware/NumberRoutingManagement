@@ -1,0 +1,91 @@
+/*
+ *   NumberRoutingManagement- cssDefaults.css
+ *   Copyright (c) 2022-2022, Slinky Software
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Affero General Public License as
+ *   published by the Free Software Foundation, either version 3 of the
+ *   License, or (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Affero General Public License for more details.
+ *
+ *   A copy of the GNU Affero General Public License is located in the 
+ *   AGPL-3.0.md supplied with the source code.
+ *
+ */
+
+fieldset.form-group {
+    position: relative;
+}
+
+label.banner-label {
+    position: absolute;
+    top: -8px;
+    left: 1rem;
+    background: #ffffff;
+    font-size: 0.7rem;
+    color: #888888;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.modal-full-height-1000px {
+    width: 1000px !important;
+}
+
+.modal-dialog-950px {
+    max-width: 950px !important;
+}
+
+.modal-full-height-700px {
+    width: 700px !important;
+}
+
+.modal-dialog-650px {
+    max-width: 650px !important;
+}
+
+.modal-full-height-850px {
+    width: 850px !important;
+}
+
+.modal-dialog-800px {
+    max-width: 800px !important;
+}
+
+
+.no-sort-icon::after {
+    content: "" !important;
+    display: none !important; 
+}
+
+.no-sort-icon::before {
+    content: "" !important;
+    display: none !important; 
+}
+.no-sort-icon { 
+    pointer-events: none!important; 
+    cursor: default !important; 
+    padding-left: 0.6rem !important;
+}
+
+.btn-rounded-cust {
+    border-radius: 1rem!important; 
+}
+
+.nav-rounded-cust { 
+    border-radius: 1rem!important; 
+}
+
+.alert-rounded-cust { 
+    border-radius: 1rem!important; 
+}
+
+.page-link  {
+    border-radius: .7rem!important; 
+}

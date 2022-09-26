@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+  NumberRoutingManagement - login.html
+  Copyright (c) 2022-2022, Slinky Software
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  A copy of the GNU Affero General Public License is located in the 
+  AGPL-3.0.md supplied with the source code.
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <div th:replace="fragments/scripts :: header" th:remove="tag"></div>
+        <title th:text="${pagetitle}">Company - Index</title>
+
+    </head>
+    <body>
+        <div sec:authorize="isAuthenticated()" class="container">
+            <div class="row">&nbsp;</div>                  
+            <div class="row">&nbsp;</div>                  
+            <script type = "text/javascript">
+                function Redirect() {
+                    window.location.href = contextPath;
+                }
+                setTimeout('Redirect()', 5000);
+            </script>
+            <div class="row justify-content-center">
+                <div class="col-6 font-weight-lighter text-center">You are already logged in. Please wait while you are redirected.</div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 font-weight-lighter text-center">Please <span class="text-info" onclick="Redirect(); return false;">click here</span> if you are not automatically redirected within 5 seconds.</div>
+            </div>
+            <div th:replace="fragments/master :: footer">Footer</div>
+
+        </div>
+
+
+        <div class="container" sec:authorize="isAnonymous()">
+            <div th:replace="fragments/master :: header" >Header</div>
+            <div class="row">&nbsp;</div>                  
+            <div class="row justify-content-center">        
+                <div class="col-6 text-center">
+                    Please log in using the enabled provider by clicking the button below.
+                </div>
+            </div>                  
+            <div class="row">&nbsp;</div>                  
+
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <img th:src="@{${authlogo}}" alt="Login Logo" width="350"/>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>                  
+
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <form th:action="@{${authurl}}" method="GET">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:replace="fragments/master :: footer">Footer</div>
+        </div>
+
+    </body>
+</html>

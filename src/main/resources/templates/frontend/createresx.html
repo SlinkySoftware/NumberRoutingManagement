@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--
+  NumberRoutingManagement - createresx.html
+  Copyright (c) 2022-2022, Slinky Software
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+  A copy of the GNU Affero General Public License is located in the 
+  AGPL-3.0.md supplied with the source code.
+
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <div th:replace="fragments/scripts :: header" th:remove="tag"></div>
+        <title th:text="${pagetitle}">Company - Index</title>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/master :: header" >Header</div>
+
+            <div th:unless="${showAllocationResult == 1}" th:remove="tag">
+                <form method="POST">
+                    <div class="row justify-content-center" >
+                        <div class="col-6 text-left">
+
+
+                            <table class="table-borderless table-sm " id="resxTable">
+                                <tr><th scope="row" class="grey lighten-2"><label for="platformSelection" >Platform</label></th>
+                                    <td>
+                                        <select name="platformSelection" id="platformSelection" class="form-control" onchange="validate()">
+                                            <option value="null" disabled selected>--Select a Platform--</option>
+                                        </select>
+
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback" id="platformSelectionError">You must select platform</div>
+
+
+                                    </td>
+                                </tr>
+                                <tr><th scope="row" class="grey lighten-2"><label for="locationSelection" >Phone Number Location</label></th>
+                                    <td>
+                                        <select name="locationSelection" id="locationSelection" class="form-control" onchange="validate()">
+                                            <option value="null" disabled selected>--Select a Phone Number Location--</option>
+                                        </select>
+
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback" id="locationSelectionError">You must select a phone number location</div>
+
+
+                                    </td>
+                                </tr>
+
+                                <tr><th scope="row" class="grey lighten-2"><label for="typeSelection" >Resource Type</label></th>
+                                    <td>
+                                        <select name="typeSelection" id="typeSelection" class="form-control" onchange="validate()">
+                                            <option value="null" disabled selected>--Select a Resource Type--</option>
+                                        </select>
+
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback" id="typeSelectionError">You must select a resource type</div>
+
+
+                                    </td>
+                                </tr>                            
+                                <tr><th scope="row" class="grey lighten-2"><label for="deviceName">Resource Identifier</label></th>
+                                    <td><input type="text" class="form-control" id="deviceName" name="deviceName" placeholder="Enter identifier / email address" onchange="validate()" /> 
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback" id="deviceNameValidateError">Invalid Resource Identifier</div>
+                                    </td>
+                                </tr>
+                                <tr><th scope="row" class="grey lighten-2"><label for="deviceDescription" >Resource Description</label></th>
+                                    <td><input type="text" class="form-control" id="deviceDescription" name="deviceDescription" placeholder="Enter Resource Name" onchange="validate()" /> 
+                                        <div class="valid-feedback"></div>
+                                        <div class="invalid-feedback" id="deviceDescriptionValidateError">Invalid Resource Name</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-6 text-center">
+                            <button type="submit" class="btn btn-primary waves-effect btn-block" id="btnAllocate" onclick="validate()">Allocate Number</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div th:if="${showAllocationResult == 1}" th:remove="tag">
+                <div class="row justify-content-center" >
+                    <div class="col-6 text-center">
+                        <div th:if="${allocationResult.success != 1}">
+                            <div class="row px-3" id="thError" onclick="$('#thError').hide();">
+                                <div class="col-12 alert alert-danger fade show text-center">
+                                    <span th:text="'Allocation Failed - ' + ${allocationResult.errorMessage}"></span>
+                                </div>         
+                            </div>
+                        </div>
+                        <div th:if="${allocationResult.success == 1}">
+                            <div class="row px-3" id="thSuccess" onclick="$('#thSuccess').hide();">
+                                <div class="col-12 alert alert-success fade show text-center " role="alert">
+                                    <span>Allocation Succeeded</span>
+                                </div>         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center" >
+                    <div class="col-6 text-left">
+                        <table class="dataTable" id="resxResultTable">
+                            <tr><th class="grey lighten-2" scope="row">Resource Identifier</th><td th:text="${allocationResult.resourceAccountName}"></td></tr>
+                            <tr><th class="grey lighten-2" scope="row">Resource Description</th><td th:text="${allocationResult.resourceDescription}"></td></tr>
+                            <tr><th class="grey lighten-2" scope="row">Resource Type</th><td th:text="${allocationResult.resourceType}"></td></tr>
+                            <tr th:if="${allocationResult.showNumber == true}"><th class="grey lighten-2" scope="row">Allocated Number</th><td class="text-danger" th:text="${allocationResult.allocatedNumber}"></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div th:remove="tag" th:if="${allocationResult.showPowershell == true}" >
+                    <div class="row">&nbsp;</div>
+                    <div class="row justify-content-center"><div class="col-12"><h5>PowerShell Commands</h5></div></div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            Please execute the following PowerShell commands with the Teams Cmdlets in order to activate the extension. 
+                            <button class="btn btn-info btn-sm waves-effect" type="button" id="btnCopy" data-clipboard-target="#powerShellCode">
+                                <i class="far fa-copy" id="copyIcon"></i>
+                                Copy Commands</button>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center"><div class="col-12"><pre><code id="powerShellCode"><div th:text="${allocationResult.powershellCommands}" th:remove="tag"></div></code></pre></div></div>
+                </div>
+            </div>
+
+
+            <div th:if="${showAllocationResult == 1}" th:remove="tag">
+                <div class="row">&nbsp;</div>
+                <div class="row justify-content-center" >
+                    <div class="col-6 text-center">
+                        <button type="submit" class="btn btn-light btn-sm btn-block waves-effect" id="btnReturn" onclick="refreshPage()">Allocate another resource</button>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="fragments/master :: footer">Footer</div>
+        </div>
+        <script th:src="@{/assets/js/createResx.js}"></script>
+
+    </body>
+</html>
