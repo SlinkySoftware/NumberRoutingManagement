@@ -1,0 +1,124 @@
+#######################
+### System Settings ###
+#######################
+
+# Number of days after deallocation before we'll reuse a number
+allocation.reuse-delay-days=30
+
+
+
+##########################
+## Database Connection ###
+##########################
+
+
+# Database connection parameters. Tested with POSTGRESQL.
+number.datasource.url=jdbc:postgresql://PG-SERVER.LOCAL:5432/PG_DATABASE
+number.datasource.schema=public
+number.datasource.username=PG_USER
+number.datasource.password=PG_PASSWORD
+number.datasource.driverClassName=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
+# Database connection parameters. Tested with SQLITE.
+#number.datasource.url=jdbc:sqlite:../db/numberrouting.db
+#number.datasource.driverClassName=org.sqlite.JDBC
+#spring.jpa.database-platform=com.slinkytoybox.numberroutingmanagement.database.sqlite.SQLiteDialect
+
+
+########################
+## Platform Branding ###
+########################
+
+company.name=Demo Branding
+
+##########################################
+### Active Directory for User Lookups ####
+##########################################
+
+# AD LDAP Server/Port
+active-directory.server=AD-DOMAIN.LOCAL
+
+# Usually 389 for No encryption & TLS, or 636 for SSL
+active-directory.port=389
+
+# Security mode is one of NONE, TLS or SSL - TLS is preferred
+active-directory.security=NONE
+
+# Binding user for doing searches on AD
+active-directory.bind-user=AD-DOMAIN\SERVICE_ACCT
+active-directory.bind-pass=MyVerySecurePassword
+
+# Base DN for Searching the tree
+active-directory.search-base=dc=AD-DOMAIN,dc=LOCAL
+
+# DN, CN, SAMACCOUNTNAME, UPN
+active-directory.search-mode=SAMACCOUNTNAME
+
+########################################
+#### SAML Authentication Parameters ####
+########################################
+
+saml.sso.context-provider.lb.enabled = true
+saml.sso.context-provider.lb.scheme=https
+saml.sso.profile-options.relay-state=https://my-loadbalanced-hostname.my-domain.com
+
+## Okta
+#auth.saml.entity-id=http://www.okta.com/XXXXXXX
+#auth.saml.sso.url=https://sso.DOMAIN.com/app/dev-123456_numberallocator_1/XXXXXX
+#auth.saml.registration-id=okta-saml
+#auth.saml.provider=okta
+#auth.saml.certificate=okta.cert
+#auth.saml.group-attribute=APP_ROLE
+#auth.saml.groupMapping.PLATFORM_ADMIN=NumberAllocator_PLATFORM_ADMIN
+#auth.saml.groupMapping.TELEPHONY_MGMT=NumberAllocator_TELEPHONY_MGMT
+#auth.saml.groupMapping.USER_MGMT=NumberAllocator_USER_MGMT
+#auth.saml.groupMapping.READ_ONLY=NumberAllocator_READ_ONLY
+
+## ADFS
+#auth.saml.entity-id=http://adfs.MY-DOMAIN.com/adfs/services/trust
+#auth.saml.sso.url=https://adfs.MY-DOMAIN.com/adfs/ls
+#auth.saml.registration-id=adfs
+#auth.saml.provider=adfs
+#auth.saml.certificate=adfs.cert
+#auth.saml.group-attribute=AD_GROUPS
+#auth.saml.signing=true
+#auth.saml.groupMapping.PLATFORM_ADMIN=GRP_NUMALLOC_PlatformAdmin
+#auth.saml.groupMapping.TELEPHONY_MGMT=GRP_NUMALLOC_TelephonyMgmt
+#auth.saml.groupMapping.USER_MGMT=GRP_NUMALLOC_UserMgmt
+#auth.saml.groupMapping.READ_ONLY=GRP_NUMALLOC_ReadOnly
+
+
+## AzureAD/office365
+auth.saml.entity-id=https://sts.windows.net/11111111-2222-3333-4444-555555555555/
+auth.saml.sso.url=https://login.microsoftonline.com/11111111-2222-3333-4444-555555555555/saml2
+auth.saml.registration-id=azuread
+auth.saml.certificate=azuread.cert
+auth.saml.provider=o365
+auth.saml.group-attribute=http://schemas.microsoft.com/ws/2008/06/identity/claims/role
+auth.saml.signing=true
+auth.saml.groupMapping.PLATFORM_ADMIN=PLATFORM_ADMIN
+auth.saml.groupMapping.TELEPHONY_MGMT=TELEPHONY_MANAGEMENT
+auth.saml.groupMapping.USER_MGMT=USER_MANAGEMENT
+auth.saml.groupMapping.READ_ONLY=READ_ONLY
+
+#############################
+#### Powershell Commands ####
+#############################
+### Variables - always encased with tilde's ~
+### ~E164~ - Allocated Number
+### ~UPN~  - User UPN
+### ~USER~ - User sAMAccountName
+### ~DP~ - Site Dial Plan
+
+### Multiple commands can be specified by incrementing .1 .2 .3 etc on the end.
+###
+
+powershell.new-teams-acct.1=Set-CsPhoneNumberAssignment -Identity "~UPN~" -PhoneNumber ~E164~ -PhoneNumberType DirectRouting 
+powershell.new-teams-acct.2=Grant-CsTenantDialPlan -Identity ~UPN~ -PolicyName ~DP~
+powershell.new-teams-acct.3=Set-CsOnlineVoicemailUserSettings -Identity ~UPN~ -PromptLanguage en-AU
+
+powershell.remove-teams-all.1=Remove-CsPhoneNumberAssigment -Identity "~UPN~" -RemoveAll
+
+powershell.remove-teams-number.1=Remove-CsPhoneNumberAssignment -Identity "~UPN~" -PhoneNumber ~E164~ -PhoneNumberType DirectRouting 
+
