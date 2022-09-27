@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Active Directory Connection Object
+ *
  * @author Michael Junek (michael@juneks.com.au)
  */
 @Slf4j
@@ -41,11 +42,12 @@ public class ADConnection {
     private int ldapPort;
     private ConnectionSecurityMode secMode;
 
-    private Hashtable<String,String> connectionParameters;
+    private Hashtable<String, String> connectionParameters;
     private String ldapURL;
 
     /**
      * Builds a new Active Directory Connection
+     *
      * @param ldapServer Active Directory LDAP Server host name
      * @param port LDAP Port, usually 389 or 636
      * @param securityMode Encryption Required, SSL, TLS or NONE
@@ -133,27 +135,30 @@ public class ADConnection {
         }
         catch (AuthenticationNotSupportedException ex) {
             log.error("{}The authentication method is not supported by the server", logPrefix, ex);
-            throw new ConnectionException ("The authentication method is not supported by the server", ex);
+            throw new ConnectionException("The authentication method is not supported by the server", ex);
         }
         catch (AuthenticationException ex) {
             log.error("{}Incorrect password or username", logPrefix, ex);
-             throw new IncorrectCredentialsException ("Incorrect password or username",ex);
+            throw new IncorrectCredentialsException("Incorrect password or username", ex);
         }
         catch (NamingException ex) {
             log.error("{}NamingError when trying to create the context", logPrefix, ex);
-            throw new ConnectionException ("NamingError when trying to create the context",ex);
+            throw new ConnectionException("NamingError when trying to create the context", ex);
         }
     }
-    
+
     void returnContext(DirContext context) {
         final String logPrefix = "returnContext() - ";
         log.trace("{}Entering method", logPrefix);
+        if (context == null) {
+            return;
+        }
         try {
             log.info("{}Closing AD Connection Context", logPrefix);
             context.close();
         }
         catch (NamingException ex) {
-            log.warn("{}Exception closing context (ignored) {}" ,logPrefix, ex.getMessage());
+            log.warn("{}Exception closing context (ignored) {}", logPrefix, ex.getMessage());
         }
         log.trace("{}LEaving method", logPrefix);
     }
@@ -162,10 +167,11 @@ public class ADConnection {
         return ldapURL;
     }
 
-
     /**
      *
-     * Builds a new Active Directory Connection. Assumes no authentication required.
+     * Builds a new Active Directory Connection. Assumes no authentication
+     * required.
+     *
      * @param ldapServer Active Directory LDAP Server host name
      * @param port LDAP Port, usually 389 or 636
      * @param securityMode Encryption Required, SSL, TLS or NONE
@@ -175,7 +181,9 @@ public class ADConnection {
     }
 
     /**
-     * Builds a new Active Directory Connection. Assumes no encryption or authentication
+     * Builds a new Active Directory Connection. Assumes no encryption or
+     * authentication
+     *
      * @param ldapServer Active Directory LDAP Server host name
      * @param port LDAP Port, usually 389 or 636
      */
@@ -185,7 +193,9 @@ public class ADConnection {
     }
 
     /**
-     * Builds a new Active Directory Connection. Assumes no encryption or authentication, and 389 for port number
+     * Builds a new Active Directory Connection. Assumes no encryption or
+     * authentication, and 389 for port number
+     *
      * @param ldapServer Active Directory LDAP Server host name
      */
     public ADConnection(String ldapServer) {
@@ -193,16 +203,13 @@ public class ADConnection {
 
     }
 
-
     String getLdapServer() {
         return this.ldapServer;
     }
 
-
     int getLdapPort() {
-       return this.ldapPort;
+        return this.ldapPort;
     }
-
 
     ConnectionSecurityMode getSecMode() {
         return this.secMode;

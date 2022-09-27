@@ -71,6 +71,12 @@ public class ADFunctions {
         adConn = new ADConnection(ldapServer, ldapPort, csm, bindUser, bindPass);
         log.trace("{}Leaving method", logPrefix);
     }
+    
+    public ADConnection getConnection() {
+        final String logPrefix = "getConnection() - ";
+        log.trace("{}Entering method", logPrefix);
+        return adConn;
+    }
 
     private ADUser lookupUser(String username) throws ActiveDirectoryException {
         final String logPrefix = "lookupUser() - ";

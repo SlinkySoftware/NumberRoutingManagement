@@ -40,7 +40,6 @@ import org.springframework.security.saml2.provider.service.web.Saml2MetadataFilt
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.saml2.provider.service.web.RelyingPartyRegistrationResolver;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
 
 /**
  *
@@ -76,6 +75,7 @@ public class SAMLAuthenticationConfiguration {
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/logout*").permitAll()
                 .antMatchers("/source/**").permitAll()
+                .antMatchers("/metrics/health**/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .csrf().disable().headers().frameOptions().disable()

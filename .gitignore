@@ -36,4 +36,4 @@ nb-configuration.xml
 
 
 /application.properties
-
+/config/**
