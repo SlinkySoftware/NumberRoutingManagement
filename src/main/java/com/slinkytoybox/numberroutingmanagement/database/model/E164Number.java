@@ -1,7 +1,7 @@
 /*
  *   number-routing-management - E164Number.java
  *
- *   Copyright (c) 2022-2022, Slinky Software
+ *   Copyright (c) 2022-2023, Slinky Software
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU Affero General Public License as
@@ -56,7 +56,7 @@ import org.hibernate.annotations.FetchMode;
 @NoArgsConstructor
 @Table(name = "e164number")
 @DynamicUpdate
-@ToString(exclude = {""})
+@ToString()
 
 public class E164Number implements Serializable, AuditableObject, Cloneable {
 
